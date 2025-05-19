@@ -16,7 +16,7 @@
 #include <moveit/task_constructor/stages/fixed_state.h>
 #include <moveit/task_constructor/stages/compute_ik.h>
 #include <moveit/task_constructor/cost_terms.h>
-#include "ik_clearance_cost_parameters.hpp"
+#include <rm_75_mtc_demos/ik_clearance_cost_parameters.hpp>
  
 // Use the moveit::task_constructor namespace for convenience
 using namespace moveit::task_constructor;
@@ -81,9 +81,9 @@ int main(int argc, char** argv) {
   co.header.frame_id = t.getRobotModel()->getModelFrame();
   co.primitive_poses.emplace_back();
   co.primitive_poses[0].orientation.w = 1.0;
-  co.primitive_poses[0].position.x = -0.183;
-  co.primitive_poses[0].position.y = -0.14;
-  co.primitive_poses[0].position.z = 0.15;
+  co.primitive_poses[0].position.x = -0.1;
+  co.primitive_poses[0].position.y = 0.2;
+  co.primitive_poses[0].position.z = 0.27;
   scene->processCollisionObjectMsg(co);
   RCLCPP_INFO(logger, "Obstacle added to scene: sphere at position (%.2f, %.2f, %.2f) with radius %.2f",
               co.primitive_poses[0].position.x, co.primitive_poses[0].position.y,
@@ -100,9 +100,10 @@ int main(int argc, char** argv) {
   ik->insert(std::move(initial));
   ik->setGroup("rm_75_arm");
  
+  ik->setIKFrame("Link7");
   // Set the target pose
-  ik->setTargetPose(Eigen::Translation3d(-.183, 0.0175, .15) * Eigen::AngleAxisd(M_PI/4, Eigen::Vector3d::UnitX()));
- 
+  ik->setTargetPose(Eigen::Translation3d(-.18, 0.2, .5) * Eigen::AngleAxisd(M_PI/4, Eigen::Vector3d::UnitX()));
+  
   ik->setTimeout(1.0);
   ik->setMaxIKSolutions(100);
  
