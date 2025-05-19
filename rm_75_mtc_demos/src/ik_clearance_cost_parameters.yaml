@@ -1,7 +1,7 @@
 ik_clearance_cost_demo:
   cumulative:
     type: bool
-    defaut_value: false
+    default_value: false
     read_only: true
 
   with_world:
